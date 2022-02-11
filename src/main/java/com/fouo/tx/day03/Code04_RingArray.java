@@ -1,15 +1,55 @@
 package com.fouo.tx.day03;
 
+/**
+ * 通过数组的方式实现队列
+ */
 public class Code04_RingArray {
 
 	public static class MyQueue {
+		private int[] arr;
+		private int pushIndex;
+		private int popIndex;
+		private int size;
+		private final int limit;
+
+		public MyQueue(int limit){
+			arr = new int[limit];
+			pushIndex = 0;
+			popIndex = 0;
+			size = 0;
+			this.limit = limit;
+		}
+
+		public void push(int num){
+			if(size==limit){
+				throw new RuntimeException("队列已满");
+			}
+			arr[pushIndex] = num;
+			size++;
+			pushIndex = nextIndex(pushIndex);
+		}
+		public int pop(){
+			if(size==0){
+				throw new RuntimeException("队列已空");
+			}
+			size--;
+			int res = arr[popIndex];
+			popIndex = nextIndex(popIndex);
+			return res;
+		}
+		private int nextIndex(int i) {
+			return i<limit-1? i+1:0;
+		}
+	}
+
+	public static class MyQueue1{
 		private int[] arr;
 		private int pushi;// end
 		private int polli;// begin
 		private int size;
 		private final int limit;
 
-		public MyQueue(int limit) {
+		public MyQueue1(int limit) {
 			arr = new int[limit];
 			pushi = 0;
 			polli = 0;
