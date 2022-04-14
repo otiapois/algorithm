@@ -11,26 +11,27 @@ public class Code01_MergeSort {
     }
 
     private static void process(int[] arr, int L, int R) {
-        if (L == R) {
+        if (L >= R) {
             return;
         }
-        int mid = L + ((R - L) >> 1);
-        process(arr, L, mid);
-        process(arr, mid + 1, R);
-        merge(arr, L, mid, R);
+        int M = L + ((R - L) >> 1);
+        process(arr, L, M);
+        process(arr, M + 1, R);
+        merge(arr, L, M, R);
     }
 
     private static void merge(int[] arr, int L, int M, int R) {
         int[] help = new int[R - L + 1];
-        int i = 0;
         int p1 = L;
         int p2 = M + 1;
+        int i = 0;
         while (p1 <= M && p2 <= R) {
             help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
         }
         while (p1 <= M) {
             help[i++] = arr[p1++];
         }
+
         while (p2 <= R) {
             help[i++] = arr[p2++];
         }
@@ -92,22 +93,20 @@ public class Code01_MergeSort {
         int mergeSize = 1;
         while (mergeSize < N) {
             int L = 0;
-            while(L<N){
-                //剩余的长度不够一个步长了
-                if(mergeSize>=N-L){
+            while (L < N) {
+                if (mergeSize >= N - L) {
                     break;
                 }
-                int M = L + mergeSize -1;
-                int R = M + Math.min(mergeSize,N-M-1);
-                merge(arr,L,M,R);
+                int M = L + mergeSize - 1;
+                int R = M + Math.min(mergeSize, N - (M+1));
+                merge(arr,L,M,R );
                 L = R+1;
             }
             if(mergeSize>N/2){
                 break;
             }
-            mergeSize <<= 1;
+            mergeSize <<=1;
         }
-
     }
 
 

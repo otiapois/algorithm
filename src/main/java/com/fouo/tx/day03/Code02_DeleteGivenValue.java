@@ -2,6 +2,13 @@ package com.fouo.tx.day03;
 
 import java.util.LinkedList;
 
+/**
+ * @author KONGLH
+ * @title: 把给定的数都删除
+ * @projectName
+ * @description:
+ * @date  2022/4/11 14:07
+ */
 public class Code02_DeleteGivenValue {
 
 	public static class Node {
@@ -13,8 +20,32 @@ public class Code02_DeleteGivenValue {
 		}
 	}
 
-	// head = removeValue(head, 2);
 	public static Node removeValue(Node head, int num) {
+		while(head!=null){
+			if(head.value == num){
+				head = head.next;
+			}else {
+				break;
+			}
+		}
+		Node pre = head;
+		Node cur = head;
+		while (cur != null) {
+			if(cur.value == num){
+				pre.next = cur.next;
+			}else{
+				pre = cur;
+			}
+			cur = cur.next;
+		}
+		return head;
+	}
+
+
+
+
+	// head = removeValue(head, 2);
+	public static Node removeValue3(Node head, int num) {
 		while(head!=null){
 			if(head.value == num){
 				head = head.next;

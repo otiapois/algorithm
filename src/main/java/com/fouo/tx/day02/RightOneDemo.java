@@ -14,7 +14,8 @@ package com.fouo.tx.day02;
 public class RightOneDemo {
     public static void main(String[] args) {
         int a = 7;
-        int ans = a&(-a);
+//        int ans = a&(-a);
+        int ans = a&(~a+1);
         System.out.println(ans);
     }
 }

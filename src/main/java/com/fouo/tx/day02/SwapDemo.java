@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class SwapDemo {
     public static void main(String[] args) {
         int[] arr = {3,2};
-        swap(arr, 0, 0);
+        swap(arr, 0, 1);
         System.out.println(Arrays.toString(arr));
 //        int a = 10;
 //        int b = 2;

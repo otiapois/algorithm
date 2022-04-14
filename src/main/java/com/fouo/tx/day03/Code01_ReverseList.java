@@ -28,15 +28,15 @@ public class Code01_ReverseList {
     //   a    ->   b    ->  c  ->  null
     //   c    ->   b    ->  a  ->  null
     public static Node reverseLinkedList(Node head) {
-        Node pre = null;
-        Node next = null;
-        while (head != null) {
-            next = head.next;
-            head.next = pre;
-            pre = head;
-            head = next;
-        }
-        return pre;
+      Node pre = null;
+      Node next = null;
+      while(head!= null){
+          next = head.next;
+          head.next = pre;
+          pre = head;
+          head = next;
+      }
+      return pre;
     }
 
     public static Node reverseLinkedList1(Node head) {
@@ -52,6 +52,18 @@ public class Code01_ReverseList {
     }
 
     public static DoubleNode reverseDoubleList(DoubleNode head) {
+        DoubleNode pre = null;
+        DoubleNode next = null;
+        while(head!=null){
+            next = head.next;
+            head.next = pre;
+            head.last = next;
+            pre = head;
+            head = next;
+        }
+        return  pre;
+    }
+    public static DoubleNode reverseDoubleList2(DoubleNode head) {
         DoubleNode pre = null;
         DoubleNode next = null;
         while (head != null) {

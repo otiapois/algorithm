@@ -9,7 +9,24 @@ package com.fouo.tx.day02;
 public class PrintOddTimesNum2 {
     public static void main(String[] args) {
         int[] arr = {6, 10, 6, 6, 4, 4, 12, 12, 3, 3};
-        printOddTimesNum2(arr);
+        printOddTimesNum3(arr);
+    }
+
+    private static void printOddTimesNum3(int[] arr) {
+        int eor = 0;
+        for(int i=0;i<arr.length;i++){
+            eor = eor ^ arr[i];
+        }
+
+        int rightOne = eor & (~eor+1);
+        int onlyOne = 0 ;
+        for(int i=0;i<arr.length;i++){
+           if((arr[i]&rightOne)!=0){
+               onlyOne = onlyOne ^ arr[i];
+           }
+        }
+        System.out.println(onlyOne);
+        System.out.println(onlyOne^eor);
     }
 
     private static void printOddTimesNum2(int[] arr) {
@@ -18,6 +35,7 @@ public class PrintOddTimesNum2 {
         for (int i = 0; i < arr.length; i++) {
             eor = eor ^ arr[i];
         }
+
         //找出eor的最右为1的数
         /**
          * eor = a ^ b;

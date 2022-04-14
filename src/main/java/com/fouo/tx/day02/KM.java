@@ -15,6 +15,24 @@ import java.util.Map;
  * @date 2022/2/1 21:01
  */
 public class KM {
+    public static int onlyKTimes2(int[] arr, int k, int m) {
+        int[] temp = new int[32];
+        for (int num : arr) {
+            for (int i = 0; i <= 31; i++) {
+                temp[i] += num >> i & 1;
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < temp.length; i++) {
+           if(( temp[i] % m )!=0){
+               res |= 1<<i;
+           }
+        }
+
+        return res;
+    }
+
+
     public static int onlyKTimes(int[] arr, int k, int m) {
         int[] t = new int[32];
         for (int num : arr) {
@@ -26,9 +44,9 @@ public class KM {
             }
         }
         int ans = 0;
-        for (int n=0;n<t.length;n++) {
-            if((t[n]%m)!=0){
-                ans |= 1<<n;
+        for (int n = 0; n < t.length; n++) {
+            if ((t[n] % m) != 0) {
+                ans |= 1 << n;
             }
         }
         return ans;
@@ -78,13 +96,14 @@ public class KM {
             }
             int[] arr = randomArray(kinds, range, k, m);
             int ans1 = test(arr, k, m);
-            int ans2 = onlyKTimes(arr, k, m);
+            int ans2 = onlyKTimes2(arr, k, m);
             if (ans1 != ans2) {
                 System.out.println("错误");
             }
         }
         System.out.println("测试结束");
     }
+
     public static int[] randomArray(int maxkinds, int range, int k, int m) {
         int ktimesNum = randomNumber(range);//出现K次的一种数
         int numKinds = (int) (Math.random() * maxkinds) + 2;//数的种类
@@ -119,6 +138,7 @@ public class KM {
 
         return res;
     }
+
     public static int[] randomArray1(int maxkinds, int range, int k, int m) {
         int ktimenum = randomNumber(range);//k次的数 随机产生的目标数也就是result
         //一共有多少种数 >2
@@ -168,32 +188,27 @@ public class KM {
     }
 
     /**
-     *
      * @param arr 测试数组
-     * @param k 唯一一种类型的数出现的次数
+     * @param k   唯一一种类型的数出现的次数
      * @param m
      * @return
      */
     public static int test(int[] arr, int k, int m) {
-        Map<Integer,Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         for (int num : arr) {
-            if(!map.containsKey(num)){
-                map.put(num,1);
-            }else{
-                map.put(num,map.get(num)+1);
+            if (!map.containsKey(num)) {
+                map.put(num, 1);
+            } else {
+                map.put(num, map.get(num) + 1);
             }
         }
         for (Integer key : map.keySet()) {
-            if(map.get(key)==k){
+            if (map.get(key) == k) {
                 return key;
             }
         }
         return -1;
     }
-
-
-
-
 
 
     public static int test1(int[] arr, int k, int m) {
