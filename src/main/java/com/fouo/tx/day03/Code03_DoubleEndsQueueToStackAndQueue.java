@@ -23,46 +23,49 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
         //从头部加
         public void addFromHead(T value) {
             Node<T> cur = new Node<>(value);
-            if (head == null) {
+            if(head == null){
                 head = cur;
                 tail = cur;
-            } else {
+            }else{
                 cur.next = head;
                 head.last = cur;
                 head = cur;
             }
         }
+
         //从底部加
         public void addFromBottom(T value) {
             Node<T> cur = new Node<>(value);
-            if (tail == null) {
+            if(tail == null){
                 head = cur;
                 tail = cur;
-            } else {
+            }else{
                 cur.last = tail;
                 tail.next = cur;
                 tail = cur;
             }
         }
+
         //从头部弹
         public T popFromHead() {
-            if (head == null) {
+            if(head == null){
                 return null;
             }
             Node<T> cur = head;
             if(head == tail){
-                head = null;
-                tail = null;
+               head = null;
+               tail = null;
             }else{
                 head = head.next;
-                cur.next = null;
                 head.last = null;
+                cur.next = null;
             }
             return cur.value;
         }
+
         //从底部弹
         public T popFromBottom() {
-            if (tail == null) {
+            if(tail == null){
                 return null;
             }
             Node<T> cur = tail;
@@ -74,7 +77,6 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
                 tail.next = null;
                 cur.last = null;
             }
-
             return cur.value;
         }
 
@@ -101,6 +103,7 @@ public class Code03_DoubleEndsQueueToStackAndQueue {
                 tail = cur;
             }
         }
+
         public T popFromHead1() {
             if (head == null) {
                 return null;

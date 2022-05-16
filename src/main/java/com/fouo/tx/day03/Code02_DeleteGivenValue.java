@@ -22,15 +22,15 @@ public class Code02_DeleteGivenValue {
 
 	public static Node removeValue(Node head, int num) {
 		while(head!=null){
-			if(head.value == num){
+			if(head.value==num){
 				head = head.next;
-			}else {
+			}else{
 				break;
 			}
 		}
-		Node pre = head;
 		Node cur = head;
-		while (cur != null) {
+		Node pre = head;
+		while(cur!=null){
 			if(cur.value == num){
 				pre.next = cur.next;
 			}else{
@@ -38,11 +38,8 @@ public class Code02_DeleteGivenValue {
 			}
 			cur = cur.next;
 		}
-		return head;
+		return  pre;
 	}
-
-
-
 
 	// head = removeValue(head, 2);
 	public static Node removeValue3(Node head, int num) {

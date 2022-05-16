@@ -25,13 +25,13 @@ public class Code01_MergeSort {
         int p1 = L;
         int p2 = M + 1;
         int i = 0;
+
         while (p1 <= M && p2 <= R) {
             help[i++] = arr[p1] <= arr[p2] ? arr[p1++] : arr[p2++];
         }
         while (p1 <= M) {
             help[i++] = arr[p1++];
         }
-
         while (p2 <= R) {
             help[i++] = arr[p2++];
         }
@@ -89,8 +89,8 @@ public class Code01_MergeSort {
         if (arr == null || arr.length < 2) {
             return;
         }
-        int N = arr.length;
         int mergeSize = 1;
+        int N = arr.length;
         while (mergeSize < N) {
             int L = 0;
             while (L < N) {
@@ -98,15 +98,36 @@ public class Code01_MergeSort {
                     break;
                 }
                 int M = L + mergeSize - 1;
-                int R = M + Math.min(mergeSize, N - (M+1));
-                merge(arr,L,M,R );
+                int R = M +Math.min(mergeSize,N-M-1);
+                merge(arr,L,M,R);
                 L = R+1;
             }
             if(mergeSize>N/2){
                 break;
             }
-            mergeSize <<=1;
+            mergeSize<<=1;
         }
+//        if (arr == null || arr.length < 2) {
+//            return;
+//        }
+//        int N = arr.length;
+//        int mergeSize = 1;
+//        while (mergeSize < N) {
+//            int L = 0;
+//            while (L < N) {
+//                if (mergeSize >= N - L) {
+//                    break;
+//                }
+//                int M = L + mergeSize - 1;
+//                int R = M + Math.min(mergeSize, N - (M + 1));
+//                merge(arr, L, M, R);
+//                L = R + 1;
+//            }
+//            if (mergeSize > N / 2) {
+//                break;
+//            }
+//            mergeSize <<= 1;
+//        }
     }
 
 

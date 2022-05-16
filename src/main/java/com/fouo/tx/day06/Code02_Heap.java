@@ -10,13 +10,21 @@ public class Code02_Heap {
      */
     public static class FouoMaxHeap {
         private int[] heap;
-        private final int limit;
         private int heapSize;
+        private final int limit;
 
         public FouoMaxHeap(int limit) {
             heap = new int[limit];
-            this.limit = limit;
             heapSize = 0;
+            this.limit = limit;
+        }
+
+        public boolean isEmpty() {
+            return heapSize == 0;
+        }
+
+        public boolean isFull() {
+            return limit == heapSize;
         }
 
         public void swap(int[] arr, int i, int j) {
@@ -25,48 +33,40 @@ public class Code02_Heap {
             arr[j] = temp;
         }
 
-        public boolean isFull() {
-            return heapSize == limit;
-        }
-
-        public boolean isEmpty() {
-            return heapSize == 0;
-        }
-
         public void push(int value) {
             if (isFull()) {
-                throw new RuntimeException("heap is Full");
+                throw new RuntimeException("heap is full");
             }
             heap[heapSize] = value;
             heapInsert(heap, heapSize++);
         }
 
-        private void heapInsert(int[] arr, int index) {
-            while (arr[index] > arr[(index - 1) / 2]) {
-                swap(arr, index, (index - 1) / 2);
-                index = (index - 1) / 2;
+        private void heapInsert(int[] heap, int index) {
+            while (heap[index] > heap[(index - 1) /2]) {
+                swap(heap, index, (index - 1)/2);
+                index = (index - 1) /2;
             }
         }
 
         public int pop() {
             if (isEmpty()) {
-                throw new RuntimeException("Heap Is Empty");
+                throw new RuntimeException("heap is empty");
             }
-            int res = heap[0];
+            int ans = heap[0];
             swap(heap, 0, --heapSize);
             heapify(heap, 0, heapSize);
-            return res;
+            return ans;
         }
 
-        private void heapify(int[] arr, int index, int heapSize) {
+        private void heapify(int[] heap, int index, int heapSize) {
             int left = index * 2 + 1;
             while (left < heapSize) {
-                int largest = left + 1 < heapSize && arr[left + 1] > arr[left] ? left + 1 : left;
-                largest = arr[index] > arr[largest] ? index : largest;
+                int largest = left + 1 < heapSize && heap[left + 1] > heap[left] ? left + 1 : left;
+                largest = heap[index] > heap[largest] ? index : largest;
                 if (largest == index) {
                     break;
                 }
-                swap(arr, index, largest);
+                swap(heap, index, largest);
                 index = largest;
                 left = index * 2 + 1;
             }

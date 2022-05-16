@@ -14,26 +14,27 @@ import java.util.Stack;
 public class Code07_TwoQueueImplementStack {
 
     public static class TwoQueueStack<T> {
-        public Queue<T> queue;
-        public Queue<T> help;
+        private Queue<T> queue;
+        private Queue<T> help;
 
         public TwoQueueStack() {
             this.queue = new LinkedList<>();
             this.help = new LinkedList<>();
         }
 
-        /**
-         * 压栈
-         *
-         * @param value
-         */
+        public boolean isEmpty() {
+            return queue.isEmpty();
+        }
+
         public void push(T value) {
             queue.offer(value);
         }
 
-
-        public T poll() {
-            while (queue.size() > 1) {
+        public T poll(){
+            if(isEmpty()){
+                throw new RuntimeException("Stack is null");
+            }
+            while(queue.size()>1){
                 help.offer(queue.poll());
             }
             T ans = queue.poll();
@@ -43,8 +44,11 @@ public class Code07_TwoQueueImplementStack {
             return ans;
         }
 
-        public T peek() {
-            while (queue.size() > 1) {
+        public T peek(){
+            if(isEmpty()){
+                throw new RuntimeException("Stack is null");
+            }
+            while(queue.size()>1){
                 help.offer(queue.poll());
             }
             T ans = queue.poll();
@@ -53,10 +57,6 @@ public class Code07_TwoQueueImplementStack {
             queue = help;
             help = temp;
             return ans;
-        }
-
-        public boolean isEmpty() {
-        	return queue.isEmpty();
         }
     }
 
@@ -138,7 +138,5 @@ public class Code07_TwoQueueImplementStack {
         }
 
         System.out.println("test finish!");
-
     }
-
 }
