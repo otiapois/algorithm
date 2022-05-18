@@ -2,124 +2,191 @@ package com.fouo.tx.day12;
 
 import java.util.ArrayList;
 
+/**
+ * @author KONGLH
+ * @title: 判断是否是搜索二叉树
+ * 左边节点永远小于当前节点
+ * 当前节点永远小于右边节点的树
+ * @projectName
+ * @description:
+ * @date 2022/5/18 8:44
+ */
 public class Code02_IsBST {
 
-	public static class Node {
-		public int value;
-		public Node left;
-		public Node right;
+    public static class Node {
+        public int value;
+        public Node left;
+        public Node right;
 
-		public Node(int data) {
-			this.value = data;
-		}
-	}
+        public Node(int data) {
+            this.value = data;
+        }
+    }
 
-	public static boolean isBST1(Node head) {
-		if (head == null) {
-			return true;
-		}
-		ArrayList<Node> arr = new ArrayList<>();
-		in(head, arr);
-		for (int i = 1; i < arr.size(); i++) {
-			if (arr.get(i).value <= arr.get(i - 1).value) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public static boolean isBST1(Node head) {
+        if (head == null) {
+            return true;
+        }
+        ArrayList<Node> arr = new ArrayList<>();
+        in(head, arr);
+        for (int i = 1; i < arr.size(); i++) {
+            if (arr.get(i).value <= arr.get(i - 1).value) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	public static void in(Node head, ArrayList<Node> arr) {
-		if (head == null) {
-			return;
-		}
-		in(head.left, arr);
-		arr.add(head);
-		in(head.right, arr);
-	}
+    public static void in(Node head, ArrayList<Node> arr) {
+        if (head == null) {
+            return;
+        }
+        in(head.left, arr);
+        arr.add(head);
+        in(head.right, arr);
+    }
 
-	public static boolean isBST2(Node head) {
-		if (head == null) {
-			return true;
-		}
-		return process(head).isBST;
-	}
+    public static boolean isBST2(Node head) {
+        if (head == null) {
+            return true;
+        }
+        return process(head).isBST;
+    }
 
-	public static class Info {
-		public boolean isBST;
-		public int max;
-		public int min;
+    private static Info process(Node head) {
+        if (head == null) {
+            return null;
+        }
+        Info leftInfo = process(head.left);
+        Info rightInfo = process(head.right);
+        int min = head.value;
+        if (leftInfo != null) {
+			min = Math.min(min,leftInfo.min);
+        }
+        if (rightInfo != null) {
+            min = Math.min(min,rightInfo.min);
+        }
 
-		public Info(boolean i, int ma, int mi) {
-			isBST = i;
-			max = ma;
-			min = mi;
-		}
+        int max = head.value;
 
-	}
+        if (leftInfo != null) {
+            max = Math.max(max,leftInfo.max);
+        }
+        if (rightInfo != null) {
+            max = Math.max(max,rightInfo.max);
+        }
+        boolean isBST = true;
+        if(leftInfo!=null && !leftInfo.isBST){
+            isBST = false;
+        }
+        if(rightInfo!=null && !rightInfo.isBST){
+            isBST = false;
+        }
+        if(leftInfo!=null &&  leftInfo.max>=head.value){
+            isBST = false;
+        }
+        if(rightInfo!=null &&  rightInfo.min<=head.value){
+            isBST = false;
+        }
+        return new Info(isBST,min,max);
+    }
 
-	public static Info process(Node x) {
-		if (x == null) {
-			return null;
-		}
-		Info leftInfo = process(x.left);
-		Info rightInfo = process(x.right);
-		int max = x.value;
-		if (leftInfo != null) {
-			max = Math.max(max, leftInfo.max);
-		}
-		if (rightInfo != null) {
-			max = Math.max(max, rightInfo.max);
-		}
-		int min = x.value;
-		if (leftInfo != null) {
-			min = Math.min(min, leftInfo.min);
-		}
-		if (rightInfo != null) {
-			min = Math.min(min, rightInfo.min);
-		}
-		boolean isBST = true;
-		if (leftInfo != null && !leftInfo.isBST) {
-			isBST = false;
-		}
-		if (rightInfo != null && !rightInfo.isBST) {
-			isBST = false;
-		}
-		if (leftInfo != null && leftInfo.max >= x.value) {
-			isBST = false;
-		}
-		if (rightInfo != null && rightInfo.min <= x.value) {
-			isBST = false;
-		}
-		return new Info(isBST, max, min);
-	}
+    public static class Info {
+        public boolean isBST;
+        public int min;
+        public int max;
 
-	// for test
-	public static Node generateRandomBST(int maxLevel, int maxValue) {
-		return generate(1, maxLevel, maxValue);
-	}
+        public Info(boolean isBST, int min, int max) {
+            this.isBST = isBST;
+            this.min = min;
+            this.max = max;
+        }
+    }
 
-	// for test
-	public static Node generate(int level, int maxLevel, int maxValue) {
-		if (level > maxLevel || Math.random() < 0.5) {
-			return null;
-		}
-		Node head = new Node((int) (Math.random() * maxValue));
-		head.left = generate(level + 1, maxLevel, maxValue);
-		head.right = generate(level + 1, maxLevel, maxValue);
-		return head;
-	}
+//	public static boolean isBST2(Node head) {
+//		if (head == null) {
+//			return true;
+//		}
+//		return process(head).isBST;
+//	}
+//
+//	public static class Info {
+//		public boolean isBST;
+//		public int max;
+//		public int min;
+//
+//		public Info(boolean i, int ma, int mi) {
+//			isBST = i;
+//			max = ma;
+//			min = mi;
+//		}
+//
+//	}
+//
+//	public static Info process(Node x) {
+//		if (x == null) {
+//			return null;
+//		}
+//		Info leftInfo = process(x.left);
+//		Info rightInfo = process(x.right);
+//		int max = x.value;
+//		if (leftInfo != null) {
+//			max = Math.max(max, leftInfo.max);
+//		}
+//		if (rightInfo != null) {
+//			max = Math.max(max, rightInfo.max);
+//		}
+//		int min = x.value;
+//		if (leftInfo != null) {
+//			min = Math.min(min, leftInfo.min);
+//		}
+//		if (rightInfo != null) {
+//			min = Math.min(min, rightInfo.min);
+//		}
+//
+//		boolean isBST = true;
+//		if (leftInfo != null && !leftInfo.isBST) {
+//			isBST = false;
+//		}
+//		if (rightInfo != null && !rightInfo.isBST) {
+//			isBST = false;
+//		}
+//		if (leftInfo != null && leftInfo.max >= x.value) {
+//			isBST = false;
+//		}
+//		if (rightInfo != null && rightInfo.min <= x.value) {
+//			isBST = false;
+//		}
+//		return new Info(isBST, max, min);
+//	}
 
-	public static void main(String[] args) {
-		int maxLevel = 4;
-		int maxValue = 100;
-		int testTimes = 1000000;
-		for (int i = 0; i < testTimes; i++) {
-			Node head = generateRandomBST(maxLevel, maxValue);
-			if (isBST1(head) != isBST2(head)) {
-				System.out.println("Oops!");
-			}
-		}
-		System.out.println("finish!");
-	}
+    // for test
+    public static Node generateRandomBST(int maxLevel, int maxValue) {
+        return generate(1, maxLevel, maxValue);
+    }
+
+    // for test
+    public static Node generate(int level, int maxLevel, int maxValue) {
+        if (level > maxLevel || Math.random() < 0.5) {
+            return null;
+        }
+        Node head = new Node((int) (Math.random() * maxValue));
+        head.left = generate(level + 1, maxLevel, maxValue);
+        head.right = generate(level + 1, maxLevel, maxValue);
+        return head;
+    }
+
+    public static void main(String[] args) {
+        int maxLevel = 4;
+        int maxValue = 100;
+        int testTimes = 1000000;
+        for (int i = 0; i < testTimes; i++) {
+            Node head = generateRandomBST(maxLevel, maxValue);
+            if (isBST1(head) != isBST2(head)) {
+                System.out.println("Oops!");
+            }
+        }
+        System.out.println("finish!");
+    }
 
 }

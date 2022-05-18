@@ -1,149 +1,188 @@
 package com.fouo.tx.day12;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
+/**
+ * @author KONGLH
+ * @title: 判断是否是完全二叉树
+ * @projectName
+ * @description:
+ * @date 2022/5/18 8:44
+ */
 public class Code01_IsCBT {
 
-	public static class Node {
-		public int value;
-		public Node left;
-		public Node right;
+    public static class Node {
+        public int value;
+        public Node left;
+        public Node right;
 
-		public Node(int data) {
-			this.value = data;
-		}
-	}
+        public Node(int data) {
+            this.value = data;
+        }
+    }
 
-	public static boolean isCBT1(Node head) {
-		if (head == null) {
-			return true;
-		}
-		LinkedList<Node> queue = new LinkedList<>();
-		// 是否遇到过左右两个孩子不双全的节点
-		boolean leaf = false;
-		Node l = null;
-		Node r = null;
-		queue.add(head);
-		while (!queue.isEmpty()) {
-			head = queue.poll();
-			l = head.left;
-			r = head.right;
-			if (
-			// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点
-			    (leaf && (l != null || r != null)) 
-			    || 
-			    (l == null && r != null)
+    public static boolean isCBT1(Node head) {
+        if (head == null) {
+            return true;
+        }
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(head);
+        //满足左右子树不满的情况
+        // 任意存在的一颗子树必须为叶子节点 否则不为完全二叉树，或者左树为null右树不为空也不是完全二叉树
+        boolean flag = false;
+        Node l = null;
+        Node r = null;
 
-			) {
-				return false;
-			}
-			if (l != null) {
-				queue.add(l);
-			}
-			if (r != null) {
-				queue.add(r);
-			}
-			if (l == null || r == null) {
-				leaf = true;
-			}
-		}
-		return true;
-	}
+        while (!queue.isEmpty()) {
+            head = queue.poll();
+            l = head.left;
+            r = head.right;
 
-	public static boolean isCBT2(Node head) {
-		if (head == null) {
-			return true;
-		}
-		return process(head).isCBT;
-	}
+            if ((flag && (l != null || r != null) || (l == null && r != null))) {
+                return false;
+            }
+            if (l != null) {
+                queue.add(l);
+            }
+            if (r != null) {
+                queue.add(r);
+            }
+            if (l == null || r == null) {
+                flag = true;
+            }
+        }
+        return true;
+    }
+//	public static boolean isCBT1(Node head) {
+//		if (head == null) {
+//			return true;
+//		}
+//		LinkedList<Node> queue = new LinkedList<>();
+//		// 是否遇到过左右两个孩子不双全的节点
+//		boolean leaf = false;
+//		Node l = null;
+//		Node r = null;
+//		queue.add(head);
+//		while (!queue.isEmpty()) {
+//			head = queue.poll();
+//			l = head.left;
+//			r = head.right;
+//			if (
+//			// 如果遇到了不双全的节点之后，又发现当前节点不是叶节点
+//			    (leaf && (l != null || r != null))
+//			    ||
+//			    (l == null && r != null)
+//
+//			) {
+//				return false;
+//			}
+//			if (l != null) {
+//				queue.add(l);
+//			}
+//			if (r != null) {
+//				queue.add(r);
+//			}
+//			if (l == null || r == null) {
+//				leaf = true;
+//			}
+//		}
+//		return true;
+//	}
 
-	// 对每一棵子树，是否是满二叉树、是否是完全二叉树、高度
-	public static class Info {
-		public boolean isFull;
-		public boolean isCBT;
-		public int height;
+    public static boolean isCBT2(Node head) {
+        if (head == null) {
+            return true;
+        }
+        return process(head).isCBT;
+    }
 
-		public Info(boolean full, boolean cbt, int h) {
-			isFull = full;
-			isCBT = cbt;
-			height = h;
-		}
-	}
+    // 对每一棵子树，是否是满二叉树、是否是完全二叉树、高度
+    public static class Info {
+        public boolean isFull;
+        public boolean isCBT;
+        public int height;
 
-	public static Info process(Node X) {
-		if (X == null) {
-			return new Info(true, true, 0);
-		}
-		Info leftInfo = process(X.left);
-		Info rightInfo = process(X.right);
-		
-		
-		
-		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
-		
-		
-		boolean isFull = leftInfo.isFull 
-				&& 
-				rightInfo.isFull 
-				&& leftInfo.height == rightInfo.height;
-		
-		
-		boolean isCBT = false;
-		if (isFull) {
-			isCBT = true;
-		} else { // 以x为头整棵树，不满
-			if (leftInfo.isCBT && rightInfo.isCBT) {
-				
-				
-				if (leftInfo.isCBT 
-						&& rightInfo.isFull 
-						&& leftInfo.height == rightInfo.height + 1) {
-					isCBT = true;
-				}
-				if (leftInfo.isFull 
-						&& 
-						rightInfo.isFull 
-						&& leftInfo.height == rightInfo.height + 1) {
-					isCBT = true;
-				}
-				if (leftInfo.isFull 
-						&& rightInfo.isCBT && leftInfo.height == rightInfo.height) {
-					isCBT = true;
-				}
-				
-				
-			}
-		}
-		return new Info(isFull, isCBT, height);
-	}
+        public Info(boolean full, boolean cbt, int h) {
+            isFull = full;
+            isCBT = cbt;
+            height = h;
+        }
+    }
 
-	// for test
-	public static Node generateRandomBST(int maxLevel, int maxValue) {
-		return generate(1, maxLevel, maxValue);
-	}
+    public static Info process(Node X) {
+        if (X == null) {
+            return new Info(true, true, 0);
+        }
+        Info leftInfo = process(X.left);
+        Info rightInfo = process(X.right);
 
-	// for test
-	public static Node generate(int level, int maxLevel, int maxValue) {
-		if (level > maxLevel || Math.random() < 0.5) {
-			return null;
-		}
-		Node head = new Node((int) (Math.random() * maxValue));
-		head.left = generate(level + 1, maxLevel, maxValue);
-		head.right = generate(level + 1, maxLevel, maxValue);
-		return head;
-	}
 
-	public static void main(String[] args) {
-		int maxLevel = 5;
-		int maxValue = 100;
-		int testTimes = 1000000;
-		for (int i = 0; i < testTimes; i++) {
-			Node head = generateRandomBST(maxLevel, maxValue);
-			if (isCBT1(head) != isCBT2(head)) {
-				System.out.println("Oops!");
-			}
-		}
-		System.out.println("finish!");
-	}
+        int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+
+
+        boolean isFull = leftInfo.isFull
+                &&
+                rightInfo.isFull
+                && leftInfo.height == rightInfo.height;
+
+
+        boolean isCBT = false;
+        if (isFull) {
+            isCBT = true;
+        } else { // 以x为头整棵树，不满
+            if (leftInfo.isCBT && rightInfo.isCBT) {
+
+
+                if (leftInfo.isCBT
+                        && rightInfo.isFull
+                        && leftInfo.height == rightInfo.height + 1) {
+                    isCBT = true;
+                }
+                if (leftInfo.isFull
+                        &&
+                        rightInfo.isFull
+                        && leftInfo.height == rightInfo.height + 1) {
+                    isCBT = true;
+                }
+                if (leftInfo.isFull
+                        && rightInfo.isCBT && leftInfo.height == rightInfo.height) {
+                    isCBT = true;
+                }
+
+
+            }
+        }
+        return new Info(isFull, isCBT, height);
+    }
+
+    // for test
+    public static Node generateRandomBST(int maxLevel, int maxValue) {
+        return generate(1, maxLevel, maxValue);
+    }
+
+    // for test
+    public static Node generate(int level, int maxLevel, int maxValue) {
+        if (level > maxLevel || Math.random() < 0.5) {
+            return null;
+        }
+        Node head = new Node((int) (Math.random() * maxValue));
+        head.left = generate(level + 1, maxLevel, maxValue);
+        head.right = generate(level + 1, maxLevel, maxValue);
+        return head;
+    }
+
+    public static void main(String[] args) {
+        int maxLevel = 5;
+        int maxValue = 100;
+        int testTimes = 1000000;
+        for (int i = 0; i < testTimes; i++) {
+            Node head = generateRandomBST(maxLevel, maxValue);
+            if (isCBT1(head) != isCBT2(head)) {
+                System.out.println("Oops!");
+            }
+        }
+        System.out.println("finish!");
+    }
 
 }
