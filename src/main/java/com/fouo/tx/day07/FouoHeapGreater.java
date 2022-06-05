@@ -1,8 +1,6 @@
 package com.fouo.tx.day07;
 
-import com.fouo.tx.day05.A;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /*
