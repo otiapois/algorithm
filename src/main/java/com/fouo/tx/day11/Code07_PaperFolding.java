@@ -29,17 +29,17 @@ public class Code07_PaperFolding {
 	// 这个节点如果是凸的话，down = F
 	// 函数的功能：中序打印以你想象的节点为头的整棵树！
 	public static void process(int i, int N, boolean down) {
-		if (i > N) {
+		if(i>N){
 			return;
 		}
-		process(i + 1, N, true);
-		System.out.print(down ? "凹 " : "凸 ");
-		process(i + 1, N, false);
+		process(i+1,N,true);
+		System.out.print(down? "凹 ":"凸 ");
+		process(i+1,N,false);
 	}
 	//凹 凹 凸 凹 凹 凸 凸
 	//凹 凹 凸 凹 凹 凸 凸
 	public static void main(String[] args) {
-		int N = 3;
+		int N = 1;
 		printAllFolds(N);
 	}
 }

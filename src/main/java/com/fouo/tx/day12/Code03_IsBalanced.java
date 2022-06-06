@@ -47,11 +47,13 @@ public class Code03_IsBalanced {
         if (head == null) {
             return new Info(true, 0);
         }
+
         Info leftInfo = process(head.left);
         Info rightInfo = process(head.right);
+
         int height = Math.max(leftInfo.height, rightInfo.height) + 1;
-        boolean isBalanced = true;
-        isBalanced = leftInfo.isBalanced && rightInfo.isBalanced && Math.abs(leftInfo.height - rightInfo.height) <= 1;
+        boolean isBalanced = leftInfo.isBalanced && rightInfo.isBalanced
+                && Math.abs(leftInfo.height - rightInfo.height) <= 1;
         return new Info(isBalanced, height);
     }
 

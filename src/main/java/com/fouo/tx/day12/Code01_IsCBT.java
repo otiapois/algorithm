@@ -28,31 +28,28 @@ public class Code01_IsCBT {
         }
         Queue<Node> queue = new LinkedList<>();
         queue.add(head);
-        //满足左右子树不满的情况
-        // 任意存在的一颗子树必须为叶子节点 否则不为完全二叉树，或者左树为null右树不为空也不是完全二叉树
         boolean flag = false;
-        Node l = null;
-        Node r = null;
-
+        Node left = null;
+        Node right = null;
         while (!queue.isEmpty()) {
-            head = queue.poll();
-            l = head.left;
-            r = head.right;
+            Node cur = queue.poll();
+            left = cur.left;
+            right = cur.right;
 
-            if ((flag && (l != null || r != null) || (l == null && r != null))) {
+            if ((flag && (left != null || right != null)) || (left == null && right != null)) {
                 return false;
             }
-            if (l != null) {
-                queue.add(l);
+            if (left != null) {
+                queue.add(left);
             }
-            if (r != null) {
-                queue.add(r);
+            if (right != null) {
+                queue.add(right);
             }
-            if (l == null || r == null) {
+            if (left == null || right == null) {
                 flag = true;
             }
         }
-        return true;
+        return flag;
     }
 //	public static boolean isCBT1(Node head) {
 //		if (head == null) {

@@ -22,25 +22,25 @@ public class Code06_SuccessorNode {
 
     public static Node getSuccessorNode(Node node) {
         if (node == null) {
-            return node;
+            return null;
         }
         if (node.right != null) {
-			return getLeftMost(node.right);
-		} else {
-			Node parent = node.parent;
-			while(parent!=null && parent.right == node){
-				node = parent;
-				parent = parent.parent;
-			}
-			return parent;
-		}
+            return getLeftMost(node.right);
+        } else {
+            Node parent = node.parent;
+            while (parent != null && parent.right == node) {
+                node = parent;
+                parent = node.parent;
+            }
+            return parent;
+        }
     }
 
     public static Node getLeftMost(Node node) {
-		while(node.left!=null){
-			node = node.left;
-		}
-		return  node;
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
     }
 //	public static Node getSuccessorNode(Node node) {
 //		if (node == null) {

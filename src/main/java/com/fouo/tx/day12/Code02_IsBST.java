@@ -59,36 +59,41 @@ public class Code02_IsBST {
         }
         Info leftInfo = process(head.left);
         Info rightInfo = process(head.right);
+
         int min = head.value;
         if (leftInfo != null) {
-			min = Math.min(min,leftInfo.min);
+            min = Math.min(min, leftInfo.min);
         }
         if (rightInfo != null) {
-            min = Math.min(min,rightInfo.min);
+            min = Math.min(min, rightInfo.min);
         }
 
         int max = head.value;
-
         if (leftInfo != null) {
-            max = Math.max(max,leftInfo.max);
+            max = Math.max(max, leftInfo.max);
         }
         if (rightInfo != null) {
-            max = Math.max(max,rightInfo.max);
+            max = Math.max(max, rightInfo.max);
         }
+
         boolean isBST = true;
-        if(leftInfo!=null && !leftInfo.isBST){
+
+        if (leftInfo != null && !leftInfo.isBST) {
             isBST = false;
         }
-        if(rightInfo!=null && !rightInfo.isBST){
+
+        if (rightInfo != null && !rightInfo.isBST) {
             isBST = false;
         }
-        if(leftInfo!=null &&  leftInfo.max>=head.value){
+
+        if (leftInfo != null && (leftInfo.max >= head.value)) {
             isBST = false;
         }
-        if(rightInfo!=null &&  rightInfo.min<=head.value){
+
+        if (rightInfo != null && (rightInfo.min <= head.value)) {
             isBST = false;
         }
-        return new Info(isBST,min,max);
+        return new Info(isBST, min, max);
     }
 
     public static class Info {

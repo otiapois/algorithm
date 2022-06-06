@@ -40,25 +40,25 @@ public class Code05_TreeMaxWidth {
             Node cur = queue.poll();
             Integer curNodeLevel = map.get(cur);
 
-            if(cur.left!=null){
+            if (cur.left != null) {
                 queue.add(cur.left);
-                map.put(cur.left,curNodeLevel+1);
+                map.put(cur.left, curNodeLevel + 1);
             }
 
-            if(cur.right!=null){
+            if (cur.right != null) {
                 queue.add(cur.right);
-                map.put(cur.right,curNodeLevel+1);
+                map.put(cur.right, curNodeLevel + 1);
             }
 
-            if(curNodeLevel == curLevel){
+            if (curNodeLevel == curLevel) {
                 curLevelNodes++;
-            }else {
-                max = Math.max(max,curLevelNodes);
+            } else {
+                max = Math.max(max, curLevelNodes);
                 curLevel++;
                 curLevelNodes = 1;
             }
         }
-        max = Math.max(max,curLevelNodes);
+        max = Math.max(max, curLevelNodes);
         return max;
     }
 //    public static int maxWidthUseMap(Node head) {
@@ -117,18 +117,17 @@ public class Code05_TreeMaxWidth {
         while (!queue.isEmpty()) {
             Node cur = queue.poll();
             if (cur.left != null) {
-                queue.add(cur.left);
                 nextEnd = cur.left;
+                queue.add(cur.left);
             }
 
             if (cur.right != null) {
-                queue.add(cur.right);
                 nextEnd = cur.right;
+                queue.add(cur.right);
             }
             curLevelNodes++;
-
-            if (curEnd == cur) {
-                max = Math.max(max, curLevelNodes);
+            if (cur == curEnd) {
+                max = Math.max(max,curLevelNodes);
                 curLevelNodes = 0;
                 curEnd = nextEnd;
             }

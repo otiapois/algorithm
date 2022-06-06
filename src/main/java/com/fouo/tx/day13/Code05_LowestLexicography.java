@@ -3,7 +3,13 @@ package com.fouo.tx.day13;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.TreeSet;
-
+/**
+ * @author KONGLH
+ * @title: 贪心算法
+ * @projectName
+ * @description:
+ * @date  2022/6/6 9:57
+ */
 public class Code05_LowestLexicography {
 
 	public static String lowestString1(String[] strs) {

@@ -45,8 +45,9 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 
     // 只提交这个类即可
     class Codec {
+
         public TreeNode encode(Node root) {
-            if (root == null) {
+            if(root==null){
                 return null;
             }
             TreeNode head = new TreeNode(root.val);
@@ -57,11 +58,13 @@ public class Code03_EncodeNaryTreeToBinaryTree {
         private TreeNode en(List<Node> children) {
             TreeNode head = null;
             TreeNode cur = null;
+
             for (Node child : children) {
                 TreeNode tNode = new TreeNode(child.val);
-                if (head == null) {
+
+                if(head == null){
                     head = tNode;
-                } else {
+                }else{
                     cur.right = tNode;
                 }
                 cur = tNode;
@@ -74,15 +77,15 @@ public class Code03_EncodeNaryTreeToBinaryTree {
             if (root == null) {
                 return null;
             }
-            return new Node(root.val, de(root.left));
+            return new Node(root.val,de(root.left));
         }
 
         private List<Node> de(TreeNode head) {
             List<Node> ans = new ArrayList<>();
-            while (head != null) {
+            while(head.right!=null){
                 Node node = new Node(head.val,de(head.left));
-                ans.add(node);
                 head = head.right;
+                ans.add(node);
             }
             return ans;
         }
